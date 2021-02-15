@@ -41,14 +41,14 @@ def build_xnet(backbone, classes, skip_connection_layers,
     downsampling_list = [backbone.layers[downsampling_idx[i]].output for i in range(len(downsampling_idx))]
     downterm = [None] * (n_upsample_blocks+1)
     for i in range(len(downsampling_idx)):
-        # print(downsampling_list[0])
-        # print(backbone.output)
-        # print("")
-        if downsampling_list[0] == backbone.output:
+        # commented out bc currently only using the if-case, never else
+        # as a workaround for using keras 2.x features
+        # if downsampling_list[0] == backbone.output:
             # print("VGG16 should be!")
-            downterm[n_upsample_blocks-i] = downsampling_list[i]
-        else:
-            downterm[n_upsample_blocks-i-1] = downsampling_list[i]
+        downterm[n_upsample_blocks-i] = downsampling_list[i]
+        # else:
+        #    downterm[n_upsample_blocks-i-1] = downsampling_list[i]
+        
     downterm[-1] = backbone.output
     # print("downterm = {}".format(downterm))
 
